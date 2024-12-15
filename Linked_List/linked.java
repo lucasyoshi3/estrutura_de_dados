@@ -1,69 +1,93 @@
-class Node:
-    def __init__(self, value):
-        self.value = value
-        self.next = None
-        self.prev = None
+class Node {
+    int value;
+    Node next;
+    Node prev;
 
+    public Node(int value) {
+        this.value = value;
+        this.next = null;
+        this.prev = null;
+    }
+}
 
-class DoublyLinkedList:
-    def __init__(self):
-        self.head = None
-        self.tail = None
+class DoublyLinkedList {
+    private Node head;
+    private Node tail;
 
-    def add_to_front(self, value):
-        new_node = Node(value)
-        new_node.next = self.head
-        if self.head:
-            self.head.prev = new_node
-        else:
-            self.tail = new_node
-        self.head = new_node
+    public DoublyLinkedList() {
+        this.head = null;
+        this.tail = null;
+    }
 
-    def add_to_end(self, value):
-        new_node = Node(value)
-        new_node.prev = self.tail
-        if self.tail:
-            self.tail.next = new_node
-        else:
-            self.head = new_node
-        self.tail = new_node
+    public void addToFront(int value) {
+        Node newNode = new Node(value);
+        newNode.next = head;
+        if (head != null) {
+            head.prev = newNode;
+        } else {
+            tail = newNode;
+        }
+        head = newNode;
+    }
 
-    def remove_from_front(self):
-        if not self.head:
-            return None
+    public void addToEnd(int value) {
+        Node newNode = new Node(value);
+        newNode.prev = tail;
+        if (tail != null) {
+            tail.next = newNode;
+        } else {
+            head = newNode;
+        }
+        tail = newNode;
+    }
 
-        removed_value = self.head.value
-        self.head = self.head.next
+    public Integer removeFromFront() {
+        if (head == null) {
+            return null;
+        }
 
-        if self.head:
-            self.head.prev = None
-        else:
-            self.tail = None
-        return removed_value
+        int removedValue = head.value;
+        head = head.next;
 
-    def remove_from_end(self):
-        if not self.tail:
-            return None
+        if (head != null) {
+            head.prev = null;
+        } else {
+            tail = null;
+        }
 
-        removed_value = self.tail.value
-        self.tail = self.tail.prev
+        return removedValue;
+    }
 
-        if self.head:
-            self.head.prev = None
-        else:
-            self.tail = None
+    public Integer removeFromEnd() {
+        if (tail == null) {
+            return null;
+        }
 
-        return removed_value
+        int removedValue = tail.value;
+        tail = tail.prev;
 
+        if (tail != null) {
+            tail.next = null;
+        } else {
+            head = null;
+        }
 
-linked_list = DoublyLinkedList()
-linked_list.add_to_front(10)
-linked_list.add_to_front(25)
-linked_list.add_to_front(30)
+        return removedValue;
+    }
+}
 
-linked_list.add_to_end(5)
-linked_list.add_to_end(2)
+public class Main {
+    public static void main(String[] args) {
+        DoublyLinkedList linkedList = new DoublyLinkedList();
 
-print(linked_list.remove_from_front())
-print(linked_list.remove_from_end())
+        linkedList.addToFront(10);
+        linkedList.addToFront(25);
+        linkedList.addToFront(30);
 
+        linkedList.addToEnd(5);
+        linkedList.addToEnd(2);
+
+        System.out.println(linkedList.removeFromFront()); // Output: 30
+        System.out.println(linkedList.removeFromEnd());   // Output: 2
+    }
+}
